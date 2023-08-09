@@ -4,7 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../api/axios';
 import { Link } from "react-router-dom";
 
+// must start with lower or uppercase letter, follow by 3 to 23 characters of lower or uppercase, digits, hyphen or underscore
+// total character is 4 to 24
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+// require one lowercase, one uppercase, one digit, one special character
+// it can be 8 to 24 characters total
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = '/register';
 
@@ -27,19 +31,23 @@ const Register = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    // set focus on user input on first load
     useEffect(() => {
         userRef.current.focus();
     }, [])
 
+    // check user input validation everytime user input change
     useEffect(() => {
         setValidName(USER_REGEX.test(user));
     }, [user])
 
+    // check password and confirm password validation
     useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
 
+    // clear out error message state everytime user input or password or confirmpassword is input / changed
     useEffect(() => {
         setErrMsg('');
     }, [user, pwd, matchPwd])
