@@ -10,12 +10,14 @@ const Users = () => {
 
     useEffect(() => {
         let isMounted = true;
+        // to cancel / abort any pending request
+        // use when unmount the component to clear up any pending request
         const controller = new AbortController();
 
         const getUsers = async () => {
             try {
                 const response = await axiosPrivate.get('/users', {
-                    signal: controller.signal
+                    signal: controller.signal // this allow to cancel the request (use when unmount, clean up function on return useEffect)
                 });
                 console.log(response.data);
                 isMounted && setUsers(response.data);
