@@ -25,6 +25,8 @@ const PersistLogin = () => {
 
         // persist added here AFTER tutorial video
         // Avoids unwanted call to verifyRefreshToken
+        // when user hit reload or go to another url and go back the auth state is empty, that means no accessToken property
+        // we want to run the verifyRefreshToken function which hit the refresh endpoint only when the user hit reload on browser
         !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 
         return () => isMounted = false;
